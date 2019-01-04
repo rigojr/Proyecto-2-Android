@@ -27,7 +27,7 @@
             android:id="@+id/horaDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_below="@+id/tituloDetail"
             android:layout_toEndOf="@+id/inputFecha"
             android:text="Hora:" />
@@ -57,7 +57,7 @@
             android:layout_toEndOf="@+id/fechaDetail"
             android:layout_below="@+id/tituloDetail"
             android:padding="8dp"
-            android:ems="5"
+            android:ems="6"
             android:inputType="date"
             android:clickable="true"
             android:focusable="false"
@@ -81,7 +81,7 @@
         <EditText
             android:id="@+id/inputDetail"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="102dp"
             android:layout_below = "@+id/detalle"
             android:padding="8dp"
             android:layout_marginRight="8dp"
@@ -103,7 +103,6 @@
             android:inputType="textPersonName"
             android:padding="8dp"
             android:layout_marginRight="8dp"
-            android:textAlignment="center"
             />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -1,71 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DetailActivity">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    >
 
-    <TextView
-        android:id="@+id/fechaDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_below="@+id/tituloDetail"
-        android:text="Fecha y Hora:" />
 
-    <TextView
-        android:id="@+id/detalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_below="@+id/fechaDetail"
-        android:text="Descripción: " />
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DetailActivity">
 
-    <CheckBox
-        android:id="@+id/completadoDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Completado"
-        android:layout_alignParentRight="false"
-        android:layout_below="@+id/inputDetail"
-        android:padding="16dp"/>
+        <TextView
+            android:id="@+id/fechaDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_below="@+id/tituloDetail"
+            android:text="Fecha :" />
 
-    <EditText
-        android:id="@+id/inputFecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/fechaDetail"
-        android:layout_below="@+id/tituloDetail"
-        android:ems="12"
-        android:inputType="datetime"
-        android:clickable="true"
-        android:focusable="false"
-        android:onClick="showDatePickerDialog"/>
+        <TextView
+            android:id="@+id/horaDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_below="@+id/tituloDetail"
+            android:layout_toEndOf="@+id/inputFecha"
+            android:text="Hora:" />
 
-    <EditText
-        android:id="@+id/inputDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="102dp"
-        android:layout_toEndOf="@+id/fechaDetail"
-        android:layout_below = "@id/inputFecha"
-        android:ems="12"
-        android:inputType="textMultiLine" />
+        <TextView
+            android:id="@+id/detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_below="@+id/fechaDetail"
+            android:text="Descripción: " />
 
-    <TextView
-        android:id="@+id/tituloDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Titulo:"
-        android:padding="16dp"/>
+        <CheckBox
+            android:id="@+id/completadoDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completado"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/inputDetail"
+            android:padding="16dp"
+            />
 
-    <EditText
-        android:id="@+id/inputTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/fechaDetail"
-        android:inputType="textPersonName"
-        android:ems="12"
-        />
+        <EditText
+            android:id="@+id/inputFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/fechaDetail"
+            android:layout_below="@+id/tituloDetail"
+            android:padding="8dp"
+            android:ems="5"
+            android:inputType="date"
+            android:clickable="true"
+            android:focusable="false"
+            android:onClick="showDatePickerDialog"
+            android:textAlignment="center"/>
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/inputHora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/horaDetail"
+            android:layout_below="@+id/tituloDetail"
+            android:padding="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="4"
+            android:inputType="time"
+            android:clickable="true"
+            android:focusable="false"
+            android:onClick="showDatePickerDialog"/>
+
+        <EditText
+            android:id="@+id/inputDetail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below = "@+id/detalle"
+            android:padding="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/tituloDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo:"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/inputTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/fechaDetail"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:layout_marginRight="8dp"
+            android:textAlignment="center"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

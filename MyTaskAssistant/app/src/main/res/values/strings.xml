@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">My Task Assistant</string>
+
+    <string-array name="tasks_titles">
+        <item>Tarea 1</item>
+        <item>Tarea 2</item>
+        <item>Tarea 3</item>
+        <item>Tarea 4</item>
+        <item>Tarea 5</item>
+        <item>Tarea 6</item>
+        <item>Tarea 7</item>
+        <item>Tarea 8</item>
+        <item>Tarea 9</item>
+        <item>Tarea 10</item>
+    </string-array>
+
+    <string name="detalle">Indagar ... Investigar ... Analizar ... Concluir</string>
 </resources>

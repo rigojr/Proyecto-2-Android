@@ -15,7 +15,7 @@
         android:padding="8dp"
         android:text = "Tarea 1"
         android:textStyle="bold"
-        android:theme = "@style/ThemeOverlay.AppCompat.Dark" />
+         />
          />
 
     <TextView

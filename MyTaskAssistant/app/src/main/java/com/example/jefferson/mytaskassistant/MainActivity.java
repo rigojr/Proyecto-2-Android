@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,28 @@ public class MainActivity extends AppCompatActivity {
 
         //Get the data
         initializeData();
+
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |
+                ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT |
+                ItemTouchHelper.RIGHT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                int from = viewHolder.getAdapterPosition();
+                int to = target.getAdapterPosition();
+                Collections.swap(mTasksData, from, to);
+                mAdapter.notifyItemMoved(from, to);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                mTasksData.remove(viewHolder.getAdapterPosition());
+                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        }
+        );
+        helper.attachToRecyclerView(mRecyclerView);
 
     }
 

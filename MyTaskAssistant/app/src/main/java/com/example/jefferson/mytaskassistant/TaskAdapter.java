@@ -1,6 +1,7 @@
 package com.example.jefferson.mytaskassistant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
         return mTasksData.size();
     }
 
-    class ViewHoler extends RecyclerView.ViewHolder {
+    class ViewHoler extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTituloText;
         private TextView mFechaText;
@@ -54,6 +55,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             mFechaText  = (TextView)itemView.findViewById(R.id.fecha);
             mHoraTetx = (TextView)itemView.findViewById(R.id.hora);
             mCompletado = (CheckBox)itemView.findViewById(R.id.checkBox);
+
+            itemView.setOnClickListener(this);
         }
 
         void bindTo(Task currentTasK){
@@ -65,6 +68,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             mCompletado.setChecked(currentTasK.getCompletado());
 
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            Task currentTask = mTasksData.get(getAdapterPosition());
+
+            Intent detailIntent = new Intent(mContext, DetailActivity.class);
+            detailIntent.putExtra("title", currentTask.getTitulo());
+            detailIntent.putExtra("completado", currentTask.getCompletado());
+
+            mContext.startActivity(detailIntent);
         }
     }
 }

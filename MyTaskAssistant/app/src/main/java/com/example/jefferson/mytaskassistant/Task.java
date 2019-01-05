@@ -12,7 +12,10 @@ public class Task {
     private Date fecha;
     private Boolean completado;
 
+    public Task(){}
+
     public Task (String titulo, String detalle, Date fecha, Boolean completado){
+
         this.titulo = titulo;
         this.detalle = detalle;
         this.fecha = fecha;
@@ -52,8 +55,7 @@ public class Task {
         else
             values.put(TaskContract.TaskEntry.COMPLETADO, 0);
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = df.format(fecha);
+        String date = fecha.toString();
         values.put(TaskContract.TaskEntry.FECHA, date);
 
         return values;

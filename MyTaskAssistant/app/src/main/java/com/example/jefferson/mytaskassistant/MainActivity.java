@@ -1,5 +1,6 @@
 package com.example.jefferson.mytaskassistant;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +16,16 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<Task> mTasksData;
     private TaskAdapter mAdapter;
+    private TaskDbHelper mDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDB = new TaskDbHelper(this);
+        Cursor cursor = mDB.getAlltask();
         //Initialize the RecyclerView
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         //Set the Layout Manager
@@ -29,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         //Initialize the ArrayLIst that will contain the data
         mTasksData = new ArrayList<>();
         //Initialize the adapter and set it ot the RecyclerView
-        mAdapter = new TaskAdapter(this, mTasksData);
+        mAdapter = new TaskAdapter(this, mTasksData,mDB);
+        //mAdapter = new TaskAdapter(this, cursor);
         mRecyclerView.setAdapter(mAdapter);
+        cursor.close();
+
 
         //Get the data
         initializeData();

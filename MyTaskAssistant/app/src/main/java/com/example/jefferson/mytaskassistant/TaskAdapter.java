@@ -2,6 +2,7 @@ package com.example.jefferson.mytaskassistant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,23 @@ import java.util.ArrayList;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
 
+    private final LayoutInflater mInflater;
     private ArrayList<Task> mTasksData;
     private Context mContext;
+    private TaskDbHelper mDB;
+    private Cursor mCursor;
 
-    TaskAdapter (Context context, ArrayList<Task> tasksData ){
+    TaskAdapter (Context context, ArrayList<Task> tasksData,TaskDbHelper db ){
         this.mTasksData = tasksData;
+        mInflater = LayoutInflater.from(context);
         this.mContext = context;
+        mDB = db;
+    }
+
+    TaskAdapter (Context context, Cursor cursor){
+        mInflater = LayoutInflater.from(context);
+        this.mContext = context;
+        mCursor = cursor;
     }
 
     @Override
@@ -33,6 +45,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
         Task currentTask = mTasksData.get(position);
         //Populate the textviews with data
         holder.bindTo(currentTask);
+
     }
 
     @Override
@@ -55,7 +68,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             mFechaText  = (TextView)itemView.findViewById(R.id.fecha);
             mHoraTetx = (TextView)itemView.findViewById(R.id.hora);
             mCompletado = (CheckBox)itemView.findViewById(R.id.checkBox);
-
             itemView.setOnClickListener(this);
         }
 
@@ -63,8 +75,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
             mTituloText.setText(currentTasK.getTitulo());
-            mFechaText.setText(dateFormat.format(currentTasK.getFecha()));
-            mHoraTetx.setText(timeFormat.format(currentTasK.getFecha()));
+            //mFechaText.setText(dateFormat.format(currentTasK.getFecha()));
+            //mHoraTetx.setText(timeFormat.format(currentTasK.getFecha()));
             mCompletado.setChecked(currentTasK.getCompletado());
 
 

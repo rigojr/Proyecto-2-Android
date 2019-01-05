@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,15 +19,47 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Task> mTasksData;
     private TaskAdapter mAdapter;
     private TaskDbHelper mDB;
+    private Cursor cursor;
+    private int estado;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        if (menu.findItem(R.id.estado).getTitle().equals(R.string.finalizadas)){
+            cursor = mDB.getAlltaskIncompleted();
+        } else{
+            cursor = mDB.getAlltaskCompleted();
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Check if the correct item was clicked
+        if(estado==R.string.incompletas){
+            estado=R.string.finalizadas;
+            item.setTitle(R.string.incompletas);
+            cursor = mDB.getAlltaskCompleted();
+        } else{
+            estado=R.string.incompletas;
+            item.setTitle(R.string.finalizadas);
+            cursor = mDB.getAlltaskIncompleted();
+        }
+        mAdapter = new TaskAdapter(this, cursor,mDB);
+        mRecyclerView.setAdapter(mAdapter);
+        return true;
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        estado = R.string.incompletas;
         setContentView(R.layout.activity_main);
 
         mDB = new TaskDbHelper(this);
-        Cursor cursor = mDB.getAlltask();
+        cursor = mDB.getAlltaskIncompleted();
         //Initialize the RecyclerView
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         //Set the Layout Manager

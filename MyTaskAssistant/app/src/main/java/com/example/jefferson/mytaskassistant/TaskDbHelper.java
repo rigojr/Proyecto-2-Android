@@ -85,7 +85,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 task.toContentValues());
     }
 /*
-    public ArrayList<Task> getAlltask(String position) {
+    public ArrayList<Task> getAlltaskIncompleted(String position) {
         String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
                 TaskContract.TaskEntry.FECHA,
                 TaskContract.TaskEntry.COMPLETADO};
@@ -129,18 +129,42 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
     }
 */
-    public Cursor getAlltask() {
+    public Cursor getAlltaskIncompleted() {
+        String selection = TaskContract.TaskEntry.COMPLETADO + " = 0";
         String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
                 TaskContract.TaskEntry.FECHA,
                 TaskContract.TaskEntry.COMPLETADO};
         String orderBy = TaskContract.TaskEntry.FECHA + " DESC";
-        Task task = new Task();
         Cursor cursor = null;
         try {
             cursor = getReadableDatabase().query(
                     TaskContract.TaskEntry.TABLE_NAME,
+                    columns,
+                    selection,
                     null,
                     null,
+                    null,
+                    orderBy);
+            Log.d(TAG, "The total cursor count is " + cursor.getCount());
+        } catch (Exception e){
+            Log.e(TAG, "Error", e);
+        } finally {
+            return cursor;
+        }
+    }
+
+    public Cursor getAlltaskCompleted() {
+        String selection = TaskContract.TaskEntry.COMPLETADO + " = 1";
+        String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
+                TaskContract.TaskEntry.FECHA,
+                TaskContract.TaskEntry.COMPLETADO};
+        String orderBy = TaskContract.TaskEntry.FECHA + " DESC";
+        Cursor cursor = null;
+        try {
+            cursor = getReadableDatabase().query(
+                    TaskContract.TaskEntry.TABLE_NAME,
+                    columns,
+                    selection,
                     null,
                     null,
                     null,

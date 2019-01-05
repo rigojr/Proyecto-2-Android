@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -143,18 +144,18 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                     null,
                     null,
                     orderBy);
+            Log.d(TAG, "The total cursor count is " + cursor.getCount());
         } catch (Exception e){
-            Log.d(TAG, "EXCEPTION! " + e);
+            Log.e(TAG, "Error", e);
         } finally {
             return cursor;
         }
     }
 
 
-    public Task getTaskById(String taskId,Context context) {
+    public Task getTaskById(int taskId) {
 
-        taskId = String.valueOf(Integer.valueOf(taskId) + 1);
-        String selection = TaskContract.TaskEntry._ID + " LIKE 1";
+        String selection = TaskContract.TaskEntry._ID + " LIKE " + taskId;
         Task task = new Task();
         Cursor cursor = null;
         try {

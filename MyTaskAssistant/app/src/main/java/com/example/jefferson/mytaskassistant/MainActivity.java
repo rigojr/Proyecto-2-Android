@@ -34,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
         //Initialize the ArrayLIst that will contain the data
         mTasksData = new ArrayList<>();
         //Initialize the adapter and set it ot the RecyclerView
-        mAdapter = new TaskAdapter(this, mTasksData,mDB);
-        //mAdapter = new TaskAdapter(this, cursor);
+        //mAdapter = new TaskAdapter(this, mTasksData,mDB);
+        mAdapter = new TaskAdapter(this, cursor,mDB);
         mRecyclerView.setAdapter(mAdapter);
-        cursor.close();
 
 
         //Get the data

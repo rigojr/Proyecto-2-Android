@@ -1,5 +1,9 @@
 package com.example.jefferson.mytaskassistant;
 
+import android.content.ContentValues;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
@@ -38,5 +42,21 @@ public class Task {
     }
 
     public void setCompletado(Boolean completado){ this.completado = completado; }
+
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(TaskContract.TaskEntry.TITULO, this.titulo);
+        values.put(TaskContract.TaskEntry.DETALLE, detalle);
+        if (this.completado)
+            values.put(TaskContract.TaskEntry.COMPLETADO, 1);
+        else
+            values.put(TaskContract.TaskEntry.COMPLETADO, 0);
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(fecha);
+        values.put(TaskContract.TaskEntry.FECHA, date);
+
+        return values;
+    }
 
 }

@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 public class TaskContract{
 
     public static abstract class TaskEntry implements BaseColumns {
-        public static final String TABLE_NAME = "task";
+        public static final String TABLE_NAME = "Task";
 
         public static final String TITULO = "titulo";
         public static final String DETALLE = "detalle";

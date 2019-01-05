@@ -88,14 +88,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
         @Override
         public void onClick(View view) {
 
+            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
+            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
             Cursor cursor = mCursor;
             cursor.moveToPosition(getAdapterPosition());
 
-            Task currentTask = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
+            Task task = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
 
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
-            detailIntent.putExtra("title", currentTask.getTitulo());
-            detailIntent.putExtra("completado", currentTask.getCompletado());
+            detailIntent.putExtra("title", task.getTitulo());
+            detailIntent.putExtra("completado", task.getCompletado());
+            detailIntent.putExtra("fecha", dateFormat.format(task.getFecha()));
+            detailIntent.putExtra("hora", timeFormat.format(task.getFecha()));
+            detailIntent.putExtra("detalle", task.getDetalle());
 
             mContext.startActivity(detailIntent);
         }

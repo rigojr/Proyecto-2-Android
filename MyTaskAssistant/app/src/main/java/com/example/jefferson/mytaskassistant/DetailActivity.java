@@ -14,6 +14,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private EditText taskTitulo ;
     private EditText taskFecha ;
+    private EditText taskHora ;
     private EditText taskDetalle ;
     private CheckBox taskCompletado ;
 
@@ -25,13 +26,17 @@ public class DetailActivity extends AppCompatActivity {
 
         taskTitulo = findViewById(R.id.inputTitulo);
         taskFecha = findViewById(R.id.inputFecha);
+        taskHora = findViewById(R.id.inputHora);
         taskDetalle = findViewById(R.id.inputDetail);
         taskCompletado = findViewById(R.id.completadoDetail);
 
 
         //obttener datos del intent
         taskTitulo.setText(getIntent().getStringExtra("title"));
+        taskDetalle.setText(getIntent().getStringExtra("detalle"));
         taskCompletado.setChecked(getIntent().getBooleanExtra("completado",false));
+        taskFecha.setText(getIntent().getStringExtra("fecha"));
+        taskHora.setText(getIntent().getStringExtra("hora"));
     }
 
 

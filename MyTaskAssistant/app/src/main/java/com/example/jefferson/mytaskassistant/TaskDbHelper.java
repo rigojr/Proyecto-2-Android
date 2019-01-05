@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskDbHelper extends SQLiteOpenHelper {
@@ -174,15 +175,8 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 task.setCompletado(true);
             else
                 task.setCompletado(false);
-            String date=cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
-            /*
-            //SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-            java.util.Date parsed = dateFormat.parse(date);
-            Date dateinString = new Date(parsed.getTime());
-            task.setFecha(dateinString);
-            */
-            task.setFecha(new java.util.Date());
+            java.util.Date utilDate = new java.util.Date(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
+            task.setFecha(utilDate);
         } catch (Exception e){
             Log.d(TAG, "EXCEPTION! " + e);
         } finally {

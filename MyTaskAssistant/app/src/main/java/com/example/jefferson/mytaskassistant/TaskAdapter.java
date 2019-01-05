@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
 
@@ -75,8 +76,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
             mTituloText.setText(cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.TITULO)));
-            //mFechaText.setText(dateFormat.format(currentTasK.getFecha()));
-            //mHoraTetx.setText(timeFormat.format(currentTasK.getFecha()));
+            Date utilDate = new Date(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
+            mFechaText.setText(dateFormat.format(utilDate));
+            mHoraTetx.setText(timeFormat.format(utilDate));
             if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)))==1)
                 mCompletado.setChecked(true);
             else

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,5 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Notify the adapter of the change
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void addTask(View view) {
     }
 }

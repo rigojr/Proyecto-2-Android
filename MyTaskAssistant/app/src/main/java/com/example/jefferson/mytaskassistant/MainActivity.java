@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //Check if the correct item was clicked
         if(estado==R.string.incompletas){
+            cursor = mDB.getAlltaskCompleted();
             estado=R.string.finalizadas;
             item.setTitle(R.string.incompletas);
-            cursor = mDB.getAlltaskCompleted();
         } else{
+            cursor = mDB.getAlltaskIncompleted();
             estado=R.string.incompletas;
             item.setTitle(R.string.finalizadas);
-            cursor = mDB.getAlltaskIncompleted();
         }
         mAdapter = new TaskAdapter(this, cursor,mDB);
         mRecyclerView.setAdapter(mAdapter);

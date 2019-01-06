@@ -130,11 +130,13 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     }
 */
     public Cursor getAlltaskIncompleted() {
-        String selection = TaskContract.TaskEntry.COMPLETADO + " = 0";
-        String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
+        String columns[] = new String[]{
+                TaskContract.TaskEntry._ID,
+                TaskContract.TaskEntry.TITULO,
                 TaskContract.TaskEntry.FECHA,
                 TaskContract.TaskEntry.COMPLETADO};
         String orderBy = TaskContract.TaskEntry.FECHA + " DESC";
+        String selection = TaskContract.TaskEntry.COMPLETADO + " = 0";
         Cursor cursor = null;
         try {
             cursor = getReadableDatabase().query(
@@ -154,11 +156,13 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getAlltaskCompleted() {
-        String selection = TaskContract.TaskEntry.COMPLETADO + " = 1";
-        String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
+        String columns[] = new String[]{
+                TaskContract.TaskEntry._ID,
+                TaskContract.TaskEntry.TITULO,
                 TaskContract.TaskEntry.FECHA,
                 TaskContract.TaskEntry.COMPLETADO};
         String orderBy = TaskContract.TaskEntry.FECHA + " DESC";
+        String selection = TaskContract.TaskEntry.COMPLETADO + " = 1";
         Cursor cursor = null;
         try {
             cursor = getReadableDatabase().query(

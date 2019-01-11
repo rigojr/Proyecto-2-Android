@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void updateStatusTask(View view){
         Task task = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
-        Toast.makeText(this, "Ola k ase", Toast.LENGTH_SHORT).show();
-        //mDB.updateStatusTask(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)),task.getCompletado());
+        Toast.makeText(this, cursor.getColumnIndex(TaskContract.TaskEntry._ID), Toast.LENGTH_SHORT).show();
+        mDB.updateStatusTask(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)),task.getCompletado());
     }
 
     /**

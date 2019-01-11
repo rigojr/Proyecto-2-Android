@@ -217,8 +217,8 @@ public class TaskDbHelper extends SQLiteOpenHelper {
 
     /**
      * Método para actualizar el estado de una tarea directamente en la base de datos.
-     * @param taskId
-     * @param status
+     * @param taskId id de la tarea
+     * @param status estatus de la tarea
      * @return
      */
     public int updateStatusTask(int taskId, boolean status){

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -107,4 +108,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
         }
 
     }
+
+
 }

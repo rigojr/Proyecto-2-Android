@@ -17,6 +17,7 @@ public class DetailActivity extends AppCompatActivity {
     private EditText taskHora ;
     private EditText taskDetalle ;
     private CheckBox taskCompletado ;
+    private String id;
 
 
     @Override
@@ -37,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
         taskCompletado.setChecked(getIntent().getBooleanExtra("completado",false));
         taskFecha.setText(getIntent().getStringExtra("fecha"));
         taskHora.setText(getIntent().getStringExtra("hora"));
+        id = getIntent().getStringExtra("id");
     }
 
 

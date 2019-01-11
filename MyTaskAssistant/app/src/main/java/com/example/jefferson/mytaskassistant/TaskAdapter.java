@@ -101,6 +101,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             detailIntent.putExtra("fecha", dateFormat.format(task.getFecha()));
             detailIntent.putExtra("hora", timeFormat.format(task.getFecha()));
             detailIntent.putExtra("detalle", task.getDetalle());
+            detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
 
             mContext.startActivity(detailIntent);
         }

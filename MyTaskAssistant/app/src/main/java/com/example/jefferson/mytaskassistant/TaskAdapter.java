@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -37,7 +38,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
     public void onBindViewHolder(TaskAdapter.ViewHoler holder, int position) {
         mCursor.moveToPosition(position);
         holder.bindCursor(mCursor);
-
     }
 
     @Override
@@ -79,10 +79,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             Date utilDate = new Date(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
             mFechaText.setText(dateFormat.format(utilDate));
             mHoraTetx.setText(timeFormat.format(utilDate));
-            if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)))==1)
+
+            mCompletado.setOnCheckedChangeListener(null);
+            if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COMPLETADO)))==1)
                 mCompletado.setChecked(true);
             else
                 mCompletado.setChecked(false);
+            mCompletado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int originalPosition = mCursor.getPosition();
+                    mCursor.moveToPosition(getAdapterPosition());
+                    mDB.updateStatus(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)),mCompletado.isChecked());
+                    mCursor.moveToPosition(originalPosition);
+                }
+
+
+            });
+
         }
 
         @Override
@@ -104,6 +118,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
 
             mContext.startActivity(detailIntent);
+
         }
 
     }

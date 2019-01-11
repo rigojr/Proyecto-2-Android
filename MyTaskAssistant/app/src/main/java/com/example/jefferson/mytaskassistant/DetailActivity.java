@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         //obttener datos del intent
         taskTitulo.setText(getIntent().getStringExtra("title"));
         taskDetalle.setText(getIntent().getStringExtra("detalle"));
-        taskCompletado.setChecked(getIntent().getBooleanExtra("completado",false));
+        taskCompletado.setChecked(getIntent().getBooleanExtra("completado",true));
         taskFecha.setText(getIntent().getStringExtra("fecha"));
         taskHora.setText(getIntent().getStringExtra("hora"));
         id = getIntent().getStringExtra("id");

@@ -110,14 +110,12 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 else
                     task.setCompletado(false);
                 String date = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
-                /*
+
                 //SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
                 java.util.Date parsed = dateFormat.parse(date);
                 Date dateinString = new Date(parsed.getTime());
                 task.setFecha(dateinString);
-                */
-/*
                 task.setFecha(new java.util.Date());
                 tasks.add(task);
         }
@@ -199,7 +197,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             task.setTitulo(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)));
             task.setDetalle(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.DETALLE)));
-            if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)))==1)
+            if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COMPLETADO)))==1)
                 task.setCompletado(true);
             else
                 task.setCompletado(false);
@@ -211,5 +209,25 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             cursor.close();
             return task;
         }
+    }
+
+    public Boolean updateStatus(int taskId, Boolean completado){
+        Boolean flag;
+      try {
+          ContentValues values = new ContentValues();
+          if(completado)
+              values.put(TaskContract.TaskEntry.COMPLETADO,1);
+          else
+              values.put(TaskContract.TaskEntry.COMPLETADO,0);
+          getWritableDatabase().update(
+                  TaskContract.TaskEntry.TABLE_NAME,
+                  values,
+                  " _id = "+taskId,
+                  null);
+          flag = true;
+      }catch (Exception e){
+          flag = false;
+      }
+      return flag;
     }
 }

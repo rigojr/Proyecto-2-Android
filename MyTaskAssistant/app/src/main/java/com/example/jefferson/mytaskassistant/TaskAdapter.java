@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             cursor.moveToPosition(getAdapterPosition());
 
             Task task = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
-
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
             detailIntent.putExtra("title", task.getTitulo());
             detailIntent.putExtra("completado", task.getCompletado());

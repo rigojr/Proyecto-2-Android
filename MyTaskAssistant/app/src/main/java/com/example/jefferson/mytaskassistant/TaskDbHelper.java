@@ -62,6 +62,12 @@ public class TaskDbHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Método para insertar la data por defecto dentro de la base de datos
+     * @param sqLiteDatabase
+     * @return void
+     */
+
     private void fillDatabaseWithData(SQLiteDatabase sqLiteDatabase) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -90,6 +96,11 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 task.toContentValues());
     }
 
+    /**
+     * Método para obtener todas las tareas incompletas
+     * @return Cursor
+     */
+
     public Cursor getAlltaskIncompleted() {
         String columns[] = new String[]{
                 TaskContract.TaskEntry._ID,
@@ -115,6 +126,11 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             return cursor;
         }
     }
+
+    /**
+     * Método para obtener todas las tareas completadas
+     * @return Cursor
+     */
 
     public Cursor getAlltaskCompleted() {
         String columns[] = new String[]{
@@ -142,6 +158,11 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Método para obtener un task a partir de su id de la base de datos
+     * @param taskId id de la tarea
+     * @return Task
+     */
 
     public Task getTaskById(int taskId) {
 
@@ -176,11 +197,18 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Boolean updateStatus(int taskId, Boolean completado) {
+    /**
+     * Método para actualizar el status de la tarea en la base de datos
+     * @param taskId id de la tarea
+     * @param status estatus de la tarea
+     * @return Boolean
+     */
+
+    public Boolean updateStatus(int taskId, Boolean status) {
         Boolean flag;
         try {
             ContentValues values = new ContentValues();
-            if (completado) {
+            if (status) {
                 values.put(TaskContract.TaskEntry.COMPLETADO, 1);
                 SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
                 String dateString = format.format(new java.util.Date());

@@ -46,6 +46,11 @@ public class Task {
 
     public void setCompletado(Boolean completado){ this.completado = completado; }
 
+    /**
+     * Método que convierte los atributos del Task en ContentValues
+     * @return ContentValues
+     */
+
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.TITULO, this.titulo);

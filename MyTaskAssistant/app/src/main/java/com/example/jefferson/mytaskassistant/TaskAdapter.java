@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -76,8 +78,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
             mTituloText.setText(cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.TITULO)));
-            Date utilDate = new Date(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
+
+            //dando formato a la fecha
+            SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+            String fecha = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
+            Date utilDate = null;
+            try {
+                utilDate = format.parse(fecha);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             mFechaText.setText(dateFormat.format(utilDate));
+
             mHoraTetx.setText(timeFormat.format(utilDate));
 
             mCompletado.setOnCheckedChangeListener(null);
@@ -104,10 +116,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
 
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
             DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
-            Cursor cursor = mCursor;
-            cursor.moveToPosition(getAdapterPosition());
+            int originalPostion = mCursor.getPosition();
+            mCursor.moveToPosition(getAdapterPosition());
 
-            Task task = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
+            Task task = mDB.getTaskById(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)));
 
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
             detailIntent.putExtra("title", task.getTitulo());
@@ -117,6 +129,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             detailIntent.putExtra("detalle", task.getDetalle());
             detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
 
+            mCursor.moveToPosition(originalPostion);
             mContext.startActivity(detailIntent);
 
         }

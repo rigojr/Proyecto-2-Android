@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class TaskDbHelper extends SQLiteOpenHelper {
 
@@ -59,19 +61,20 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     }
 
     private void fillDatabaseWithData(SQLiteDatabase sqLiteDatabase) {
-        /*
-        taskFalsa(sqLiteDatabase, new Task("Hacer proyecto de Android", "Lorem ipsum",
-                Date.valueOf("2019-01-10 14:00:00"), false));
-        taskFalsa(sqLiteDatabase, new Task("Trotar", "Lorem ipsum x2",
-                Date.valueOf("2019-01-11 18:00:00"), false));
-                */
-        Task[] tasks = {new Task("Hacer proyecto de Android", "Lorem ipsum",
-                new java.util.Date(),false),
-                new Task("Tarea 2", "Lorem ipsum x2",
-                        new java.util.Date(),false),
-                new Task("Tarea 3", "Lorem ipsum x3",
-                        new java.util.Date(),false)
-                };
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        Task[] tasks = new Task[0];
+        try {
+            tasks = new Task[]{new Task("Hacer proyecto de Android", "Lorem ipsum",
+                            format.parse("2019-01-01 10:00:00"),false),
+                    new Task("Tarea 2", "Lorem ipsum x2",
+                            format.parse("2019-01-01 10:00:00"),false),
+                    new Task("Tarea 3", "Lorem ipsum x3",
+                            format.parse("2019-01-01 10:00:00"),false)
+                    };
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         for (int i=0; i < tasks.length; i++) {
             taskFalsa(sqLiteDatabase,tasks[i]);
         }
@@ -84,49 +87,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 null,
                 task.toContentValues());
     }
-/*
-    public ArrayList<Task> getAlltaskIncompleted(String position) {
-        String columns[] = new String[]{TaskContract.TaskEntry.TITULO,
-                TaskContract.TaskEntry.FECHA,
-                TaskContract.TaskEntry.COMPLETADO};
-        String orderBy = TaskContract.TaskEntry.FECHA + " DESC";
-        ArrayList<Task> tasks = new ArrayList();
-        Cursor cursor = null;
-        try {
-            cursor = getReadableDatabase().query(
-                    TaskContract.TaskEntry.TABLE_NAME,
-                    columns,
-                    null,
-                    null,
-                    null,
-                    null,
-                    orderBy);
-            while (cursor.moveToNext()){
-                Task task = new Task();
-                task.setTitulo(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)));
-                task.setDetalle(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.DETALLE)));
-                if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO))) == 1)
-                    task.setCompletado(true);
-                else
-                    task.setCompletado(false);
-                String date = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
 
-                //SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-                java.util.Date parsed = dateFormat.parse(date);
-                Date dateinString = new Date(parsed.getTime());
-                task.setFecha(dateinString);
-                task.setFecha(new java.util.Date());
-                tasks.add(task);
-        }
-        } catch (Exception e){
-            Log.d(TAG, "EXCEPTION! " + e);
-        } finally {
-            cursor.close();
-            return tasks;
-        }
-    }
-*/
     public Cursor getAlltaskIncompleted() {
         String columns[] = new String[]{
                 TaskContract.TaskEntry._ID,
@@ -201,8 +162,10 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                 task.setCompletado(true);
             else
                 task.setCompletado(false);
-            java.util.Date utilDate = new java.util.Date(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
-            task.setFecha(utilDate);
+            SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+            String fecha = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
+            java.util.Date date= format.parse(fecha);
+            task.setFecha(date);
         } catch (Exception e){
             Log.d(TAG, "EXCEPTION! " + e);
         } finally {
@@ -215,8 +178,12 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         Boolean flag;
       try {
           ContentValues values = new ContentValues();
-          if(completado)
-              values.put(TaskContract.TaskEntry.COMPLETADO,1);
+          if(completado) {
+              values.put(TaskContract.TaskEntry.COMPLETADO, 1);
+              SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+              String dateString = format.format( new java.util.Date());
+              values.put(TaskContract.TaskEntry.FECHA, dateString);
+          }
           else
               values.put(TaskContract.TaskEntry.COMPLETADO,0);
           getWritableDatabase().update(

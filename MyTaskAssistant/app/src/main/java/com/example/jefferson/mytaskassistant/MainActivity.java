@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Get the data
-        initializeData();
+        //initializeData();
 
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |
                 ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT |

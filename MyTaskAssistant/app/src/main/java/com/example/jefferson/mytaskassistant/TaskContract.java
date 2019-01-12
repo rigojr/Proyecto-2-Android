@@ -11,5 +11,7 @@ public class TaskContract{
         public static final String DETALLE = "detalle";
         public static final String FECHA = "fecha";
         public static final String COMPLETADO = "completado";
+
+        public static final String DATE_FORMAT="yyyy-mm-dd hh:mm:ss";
     }
 }

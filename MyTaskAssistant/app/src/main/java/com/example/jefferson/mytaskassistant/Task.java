@@ -55,8 +55,8 @@ public class Task {
         else
             values.put(TaskContract.TaskEntry.COMPLETADO, 0);
 
-        String date = fecha.toString();
-        values.put(TaskContract.TaskEntry.FECHA, date);
+        SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+        values.put(TaskContract.TaskEntry.FECHA, format.format(fecha));
 
         return values;
     }

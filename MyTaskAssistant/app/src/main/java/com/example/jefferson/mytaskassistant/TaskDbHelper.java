@@ -22,6 +22,8 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_OLD_VERSION = 2;
     public static final String DATABASE_NAME = "Task.db";
     private static final String TAG = "tag";
+    private SQLiteDatabase mWritableDB;
+    private SQLiteDatabase mReadableDB;
 
 
     public TaskDbHelper(Context context) {
@@ -174,27 +176,54 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Boolean updateStatus(int taskId, Boolean completado){
+    public Boolean updateStatus(int taskId, Boolean completado) {
         Boolean flag;
-      try {
-          ContentValues values = new ContentValues();
-          if(completado) {
-              values.put(TaskContract.TaskEntry.COMPLETADO, 1);
-              SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
-              String dateString = format.format( new java.util.Date());
-              values.put(TaskContract.TaskEntry.FECHA, dateString);
-          }
-          else
-              values.put(TaskContract.TaskEntry.COMPLETADO,0);
-          getWritableDatabase().update(
-                  TaskContract.TaskEntry.TABLE_NAME,
-                  values,
-                  " _id = "+taskId,
-                  null);
-          flag = true;
-      }catch (Exception e){
-          flag = false;
-      }
-      return flag;
+        try {
+            ContentValues values = new ContentValues();
+            if (completado) {
+                values.put(TaskContract.TaskEntry.COMPLETADO, 1);
+                SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+                String dateString = format.format(new java.util.Date());
+                values.put(TaskContract.TaskEntry.FECHA, dateString);
+            } else
+                values.put(TaskContract.TaskEntry.COMPLETADO, 0);
+            getWritableDatabase().update(
+                    TaskContract.TaskEntry.TABLE_NAME,
+                    values,
+                    " _id = " + taskId,
+                    null);
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+    /**
+     * Método para actualizar el estado de una tarea directamente en la base de datos.
+     * @param taskId id de la tarea
+     * @param status estatus de la tarea
+     * @return
+     */
+    public int updateStatusTask(int taskId, boolean status){
+        int mNumberOfRowsUpdated = -1;
+        try {
+
+            if( this.mWritableDB == null){
+                mWritableDB = getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            if(status){
+                values.put(TaskContract.TaskEntry.COMPLETADO, 0);
+            }else{
+                values.put(TaskContract.TaskEntry.COMPLETADO, 1);
+            }
+            mNumberOfRowsUpdated = mWritableDB.update(TaskContract.TaskEntry.TABLE_NAME,
+                    values,
+                    TaskContract.TaskEntry._ID + " = ?",
+                    new String[]{String.valueOf(taskId)});
+        }catch (Exception e){
+            Log.d (TAG, "UPDATE EXCEPTION! " + e.getMessage());
+        }
+        return mNumberOfRowsUpdated;
     }
 }

@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                mTasksData.remove(viewHolder.getAdapterPosition());
+                //mTasksData.remove(viewHolder.getAdapterPosition());
+                mAdapter.deleteTask(viewHolder.getAdapterPosition(),estado);
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
         }

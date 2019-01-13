@@ -46,6 +46,11 @@ public class Task {
 
     public void setCompletado(Boolean completado){ this.completado = completado; }
 
+    /**
+     * Método que convierte los atributos del Task en ContentValues
+     * @return ContentValues
+     */
+
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.TITULO, this.titulo);
@@ -55,8 +60,8 @@ public class Task {
         else
             values.put(TaskContract.TaskEntry.COMPLETADO, 0);
 
-        String date = fecha.toString();
-        values.put(TaskContract.TaskEntry.FECHA, date);
+        SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
+        values.put(TaskContract.TaskEntry.FECHA, format.format(fecha));
 
         return values;
     }

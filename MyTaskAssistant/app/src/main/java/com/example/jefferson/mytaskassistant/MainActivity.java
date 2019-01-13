@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Get the data
-        initializeData();
+        //initializeData();
 
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT |
                 ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP, ItemTouchHelper.LEFT |
@@ -112,5 +114,23 @@ public class MainActivity extends AppCompatActivity {
 
         //Notify the adapter of the change
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Método para actualizar el estado de una tarea haciendo una llamada a la base de datos.
+     * @param view
+     */
+    public void updateStatusTask(View view){
+        Task task = mDB.getTaskById(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)));
+        Toast.makeText(this, cursor.getColumnIndex(TaskContract.TaskEntry._ID), Toast.LENGTH_SHORT).show();
+        mDB.updateStatusTask(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID)),task.getCompletado());
+    }
+
+    /**
+     * Método para agregar una nueva tarea.
+     * @param view
+     */
+    public void addTask(View view) {
+        Toast.makeText(this, "Crear Task", Toast.LENGTH_SHORT).show();
     }
 }

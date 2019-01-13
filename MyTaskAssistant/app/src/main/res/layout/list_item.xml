@@ -47,10 +47,6 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_alignParentRight="true"
-<<<<<<< HEAD
-            android:onClick="updateStatusTask"
-=======
->>>>>>> d943fd4002a138bd953ac66f9234e951f7d191ab
             />
 
 

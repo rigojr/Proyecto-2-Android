@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
+
 
     Context mContext;
     Cursor mCursor;
@@ -99,7 +101,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
                 mCompletado.setChecked(true);
             else
                 mCompletado.setChecked(false);
-            mCompletado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                mCompletado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int originalPosition = mCursor.getPosition();
@@ -129,12 +131,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             detailIntent.putExtra("fecha", dateFormat.format(task.getFecha()));
             detailIntent.putExtra("hora", timeFormat.format(task.getFecha()));
             detailIntent.putExtra("detalle", task.getDetalle());
-            detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
+            detailIntent.putExtra("id", String.valueOf(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID))));
+            //detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
 
             mCursor.moveToPosition(originalPostion);
             mContext.startActivity(detailIntent);
 
+
         }
+        
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.Editable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -254,4 +255,25 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
         return mNumberOfRowsUpdated;
     }
+
+    public void updateTask(int taskId, String titulo, String detalle, String fecha, boolean status){
+        try {
+            ContentValues values = new ContentValues();
+            values.put(TaskContract.TaskEntry.COMPLETADO, status);
+            values.put(TaskContract.TaskEntry.TITULO,titulo);
+            values.put(TaskContract.TaskEntry.FECHA,fecha);
+            values.put(TaskContract.TaskEntry.DETALLE,detalle);
+
+            //Actualizo los datos
+            getWritableDatabase().update(
+                    TaskContract.TaskEntry.TABLE_NAME,
+                    values,
+                    " _id = " + taskId,
+                    null);
+            Log.d (TAG, "UPDATE GERAL EXITOSO! ");
+        } catch (Exception e){
+            Log.d (TAG, "UPDATE EXCEPTION! " + e.getMessage());
+        }
+    }
+
 }

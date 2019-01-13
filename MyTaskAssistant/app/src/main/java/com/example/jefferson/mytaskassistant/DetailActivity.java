@@ -1,8 +1,10 @@
 package com.example.jefferson.mytaskassistant;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,6 +21,8 @@ public class DetailActivity extends AppCompatActivity {
     private CheckBox taskCompletado ;
     private String id;
 
+    private Cursor mCursor;
+    private TaskDbHelper mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,10 @@ public class DetailActivity extends AppCompatActivity {
         taskFecha.setText(getIntent().getStringExtra("fecha"));
         taskHora.setText(getIntent().getStringExtra("hora"));
         id = getIntent().getStringExtra("id");
+
+
+        //crear base de datos
+        mDB = new TaskDbHelper(this);
     }
 
 
@@ -51,8 +59,14 @@ public class DetailActivity extends AppCompatActivity {
         String month_string = Integer.toString(month+1);
         String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);
-        String dateMessage = (day_string + "/" + month_string + "/" + year_string);
+        String dateMessage = (year_string + "-" + month_string + "-" + day_string );
 
         taskFecha.setText(dateMessage);
     }
+
+    public void updateDataTask(View view) {
+        Log.d("ID - UPDATED: ", id);
+        mDB.updateTask(Integer.valueOf(id),taskTitulo.getText().toString(),taskDetalle.getText().toString(),taskFecha.getText().toString(),taskCompletado.isChecked());
+    }
 }
+

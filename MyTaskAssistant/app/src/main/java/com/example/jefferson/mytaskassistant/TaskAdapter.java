@@ -124,12 +124,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             Task task = mDB.getTaskById(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)));
 
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
-            detailIntent.putExtra("title", task.getTitulo());
-            detailIntent.putExtra("completado", task.getCompletado());
+            detailIntent.putExtra(TaskContract.TaskEntry.TITULO, task.getTitulo());
+            detailIntent.putExtra(TaskContract.TaskEntry.COMPLETADO, task.getCompletado());
             detailIntent.putExtra("fecha", dateFormat.format(task.getFecha()));
             detailIntent.putExtra("hora", timeFormat.format(task.getFecha()));
-            detailIntent.putExtra("detalle", task.getDetalle());
-            detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
+            detailIntent.putExtra(TaskContract.TaskEntry.DETALLE, task.getDetalle());
+            detailIntent.putExtra(TaskContract.TaskEntry._ID, task.getId());
 
             mCursor.moveToPosition(originalPostion);
             mContext.startActivity(detailIntent);

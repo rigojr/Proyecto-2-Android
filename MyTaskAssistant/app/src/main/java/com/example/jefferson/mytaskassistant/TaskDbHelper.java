@@ -179,6 +179,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                     null,
                     null);
             cursor.moveToFirst();
+            task.setId(String.valueOf(taskId));
             task.setTitulo(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)));
             task.setDetalle(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.DETALLE)));
             if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COMPLETADO)))==1)

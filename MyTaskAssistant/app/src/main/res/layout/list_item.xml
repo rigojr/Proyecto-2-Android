@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_alignParentRight="true"
-            android:onClick="updateStatusTask"/>
+            android:onClick="updateStatusTask"
+            />
 
 
     </RelativeLayout>

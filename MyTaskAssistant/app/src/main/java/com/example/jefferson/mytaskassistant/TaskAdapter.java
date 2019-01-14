@@ -148,5 +148,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
 
     }
 
+    public void deleteTask(int position,int estado){
+        int originalPosition = mCursor.getPosition();
+        mCursor.moveToPosition(position);
+        mDB.deleteTask(mCursor.getString(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)));
+
+        if(estado==R.string.incompletas){
+            mCursor = mDB.getAlltaskIncompleted();
+        } else{
+            mCursor = mDB.getAlltaskCompleted();
+        }
+        mCursor.moveToPosition(originalPosition);
+    }
 
 }

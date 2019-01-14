@@ -228,6 +228,20 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         }
         return flag;
     }
+
+    public boolean deleteTask(String id){
+        String where = TaskContract.TaskEntry._ID + " LIKE " + id;
+        //String[] selectionArgs = {id};
+        int i = getWritableDatabase().delete(
+                TaskContract.TaskEntry.TABLE_NAME,
+                where,
+                null);
+        if (i>0)
+            return true;
+        else
+            return false;
+    }
+
     /**
      * Método para actualizar el estado de una tarea directamente en la base de datos.
      * @param taskId id de la tarea

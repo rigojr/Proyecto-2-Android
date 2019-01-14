@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
+
+    private String id;
     private String titulo;
     private String detalle;
     private Date fecha;
@@ -66,4 +68,11 @@ public class Task {
         return values;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

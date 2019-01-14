@@ -1,24 +1,24 @@
 package com.example.jefferson.mytaskassistant;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.widget.DatePicker;
-import android.app.DatePickerDialog;
 import android.support.v4.app.DialogFragment;
-
-
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DatePickerFragment extends DialogFragment
+public class DatePickerFragmentNew extends DialogFragment
         implements DatePickerDialog.OnDateSetListener{
 
     @NonNull
@@ -36,9 +36,10 @@ public class DatePickerFragment extends DialogFragment
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Set the activity to the Main Activity.
-        DetailActivity activity = (DetailActivity) getActivity();
+        newTaskActivity  activity = (newTaskActivity) getActivity();
 
         // Invoke Main Activity's processDatePickerResult() method.
         activity.processDatePickerResult(year, month, day);
     }
+
 }

@@ -87,11 +87,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
             SimpleDateFormat format = new SimpleDateFormat(TaskContract.TaskEntry.DATE_FORMAT);
             String fecha = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.FECHA));
             Date utilDate = null;
+            Log.d("*** fecha y hora ***", fecha);
             try {
                 utilDate = format.parse(fecha);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            Log.d("*** utilDate ***",utilDate.toString());
             mFechaText.setText(dateFormat.format(utilDate));
 
             mHoraTetx.setText(timeFormat.format(utilDate));
@@ -118,21 +120,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHoler> {
         @Override
         public void onClick(View view) {
 
-            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
-            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
+//            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
+//            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(mContext);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+
             int originalPostion = mCursor.getPosition();
             mCursor.moveToPosition(getAdapterPosition());
 
             Task task = mDB.getTaskById(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)));
 
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
-            detailIntent.putExtra("title", task.getTitulo());
-            detailIntent.putExtra("completado", task.getCompletado());
+            detailIntent.putExtra(TaskContract.TaskEntry.TITULO, task.getTitulo());
+            detailIntent.putExtra(TaskContract.TaskEntry.COMPLETADO, task.getCompletado());
             detailIntent.putExtra("fecha", dateFormat.format(task.getFecha()));
             detailIntent.putExtra("hora", timeFormat.format(task.getFecha()));
-            detailIntent.putExtra("detalle", task.getDetalle());
-            detailIntent.putExtra("id", String.valueOf(mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry._ID))));
-            //detailIntent.putExtra("id", TaskContract.TaskEntry._ID);
+            detailIntent.putExtra(TaskContract.TaskEntry.DETALLE, task.getDetalle());
+            detailIntent.putExtra(TaskContract.TaskEntry._ID, task.getId());
 
             mCursor.moveToPosition(originalPostion);
             mContext.startActivity(detailIntent);

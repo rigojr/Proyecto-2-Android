@@ -1,5 +1,6 @@
 package com.example.jefferson.mytaskassistant;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new TaskAdapter(this, cursor,mDB);
         mRecyclerView.setAdapter(mAdapter);
         return true;
+    }
+
+    @Override
+    protected  void onResume (){
+        super.onResume();
+        cursor = mDB.getAlltaskIncompleted();
+        mAdapter = new TaskAdapter(this, cursor,mDB);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
@@ -122,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void addTask(View view) {
-        Toast.makeText(this, "Crear Task", Toast.LENGTH_SHORT).show();
+        Intent detailIntent = new Intent(this, newTaskActivity.class);
+        this.startActivity(detailIntent);
+        //Toast.makeText(this, "Crear Task", Toast.LENGTH_SHORT).show();
     }
 }

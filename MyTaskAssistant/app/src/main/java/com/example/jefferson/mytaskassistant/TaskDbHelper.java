@@ -180,6 +180,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
                     null,
                     null);
             cursor.moveToFirst();
+            task.setId(String.valueOf(taskId));
             task.setTitulo(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.TITULO)));
             task.setDetalle(cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.DETALLE)));
             if ((cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COMPLETADO)))==1)
@@ -273,6 +274,22 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             Log.d (TAG, "UPDATE GERAL EXITOSO! ");
         } catch (Exception e){
             Log.d (TAG, "UPDATE EXCEPTION! " + e.getMessage());
+        }
+    }
+
+    public void saveTask( String titulo, String detalle, String fecha, boolean status){
+        try {
+            ContentValues values = new ContentValues();
+            values.put(TaskContract.TaskEntry.COMPLETADO, status);
+            values.put(TaskContract.TaskEntry.TITULO,titulo);
+            values.put(TaskContract.TaskEntry.FECHA,fecha);
+            values.put(TaskContract.TaskEntry.DETALLE,detalle);
+
+            //Actualizo los datos
+            getWritableDatabase().insert(TaskContract.TaskEntry.TABLE_NAME,null,values);
+            Log.d (TAG, "SAVE EXITOSO! ");
+        } catch (Exception e){
+            Log.d (TAG, "SAVE EXCEPTION! " + e.getMessage());
         }
     }
 

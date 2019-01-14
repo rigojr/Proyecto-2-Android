@@ -1,23 +1,16 @@
 package com.example.jefferson.mytaskassistant;
 
-import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.app.DatePickerDialog;
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class DetailActivity extends AppCompatActivity {
+public class newTaskActivity extends AppCompatActivity {
 
     private EditText taskTitulo ;
     private EditText taskFecha ;
@@ -26,44 +19,30 @@ public class DetailActivity extends AppCompatActivity {
     private CheckBox taskCompletado ;
     private String id;
 
-    private Cursor mCursor;
     private TaskDbHelper mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_new_task);
 
-        taskTitulo = findViewById(R.id.inputTitulo);
-        taskFecha = findViewById(R.id.inputFecha);
-        taskHora = findViewById(R.id.inputHora);
-        taskDetalle = findViewById(R.id.inputDetail);
-        taskCompletado = findViewById(R.id.completadoDetail);
-
-
-        //obttener datos del intent
-        id = getIntent().getStringExtra(TaskContract.TaskEntry._ID);
-        taskTitulo.setText(getIntent().getStringExtra(TaskContract.TaskEntry.TITULO));
-        taskDetalle.setText(getIntent().getStringExtra(TaskContract.TaskEntry.DETALLE));
-        taskCompletado.setChecked(getIntent().getBooleanExtra(TaskContract.TaskEntry.COMPLETADO,true));
-        taskFecha.setText(getIntent().getStringExtra("fecha"));
-        taskHora.setText(getIntent().getStringExtra("hora"));
-        id = getIntent().getStringExtra(TaskContract.TaskEntry._ID);
-
+        taskTitulo = findViewById(R.id.inputTituloNew);
+        taskFecha = findViewById(R.id.inputFechaNew);
+        taskHora = findViewById(R.id.inputHoraNew);
+        taskDetalle = findViewById(R.id.inputDetailNew);
+        taskCompletado = findViewById(R.id.completadoNew);
 
         //crear base de datos
         mDB = new TaskDbHelper(this);
-
     }
 
-
     public void showDatePickerDialog(View view) {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new DatePickerFragmentNew();
         newFragment.show(getSupportFragmentManager(),getString(R.string.date_picker));
     }
 
     public void showTimePickerDialog(View view) {
-        DialogFragment newFragment = new TimePickerFragment();
+        DialogFragment newFragment = new TimePickerFragmentNew();
         newFragment.show(getSupportFragmentManager(),
                 getString(R.string.time_picker));
     }
@@ -83,18 +62,18 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         String year_string = Integer.toString(year);
-            String dateMessage = (year_string + "-" + month_string + "-" + day_string );
+        String dateMessage = (year_string + "-" + month_string + "-" + day_string );
 
         taskFecha.setText(dateMessage);
     }
 
-    public void updateDataTask(View view) {
-
+    public void saveDataTask(View view) {
         String fecha= taskFecha.getText().toString();
         String hora= taskHora.getText().toString()+":00";
         Log.d("*** fecha y hora ***", fecha+" "+hora);
-        mDB.updateTask(Integer.valueOf(id),taskTitulo.getText().toString(),taskDetalle.getText().toString(),fecha+" "+hora,taskCompletado.isChecked());
-        Toast.makeText(this, "Tarea Modificada", Toast.LENGTH_SHORT).show();
+        mDB.saveTask(taskTitulo.getText().toString(),taskDetalle.getText().toString(),fecha+" "+hora,taskCompletado.isChecked());
+        Toast.makeText(this, "Tarea Guardadas Exitosamente", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     public void processTimePickerResult(int hour, int minute) {
@@ -103,5 +82,5 @@ public class DetailActivity extends AppCompatActivity {
         String timeMessage = (hour_string + ":" + minute_string);
         taskHora.setText(timeMessage);
     }
-}
 
+}

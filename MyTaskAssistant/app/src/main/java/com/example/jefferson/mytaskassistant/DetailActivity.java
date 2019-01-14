@@ -95,6 +95,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d("*** fecha y hora ***", fecha+" "+hora);
         mDB.updateTask(Integer.valueOf(id),taskTitulo.getText().toString(),taskDetalle.getText().toString(),fecha+" "+hora,taskCompletado.isChecked());
         Toast.makeText(this, "Tarea Modificada", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     public void processTimePickerResult(int hour, int minute) {

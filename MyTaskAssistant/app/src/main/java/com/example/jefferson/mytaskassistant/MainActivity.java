@@ -112,19 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initializeData() {
-        //Get the resources from the XML file
-        String[] tasksList = getResources().getStringArray(R.array.tasks_titles);
-
-        mTasksData.clear();
-
-        for (int i = 0; i<tasksList.length;i++){
-            mTasksData.add(new Task( tasksList[i],getResources().getString(R.string.detalle), new Date(),false));
-        }
-
-        //Notify the adapter of the change
-        mAdapter.notifyDataSetChanged();
-    }
 
 
     /**

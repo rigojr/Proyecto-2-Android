@@ -93,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                int from = viewHolder.getAdapterPosition();
-                int to = target.getAdapterPosition();
-                Collections.swap(mTasksData, from, to);
-                mAdapter.notifyItemMoved(from, to);
+//                int from = viewHolder.getAdapterPosition();
+//                int to = target.getAdapterPosition();
+//                Collections.swap(mTasksData, from, to);
+//                mAdapter.notifyItemMoved(from, to);
                 return true;
             }
 
